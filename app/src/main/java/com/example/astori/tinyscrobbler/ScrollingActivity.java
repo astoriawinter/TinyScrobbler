@@ -41,10 +41,19 @@ public class ScrollingActivity extends AppCompatActivity implements AsyncRespons
                 track = track.replaceAll("\\p{Punct}", "");
                 String url = "http://www.azlyrics.com/lyrics/" + artist.toLowerCase().replace("and", "").replace(" ", "") + "/" + track.replace(" ", "").toLowerCase() + ".html";
                 String url2 = "http://www.songlyrics.com/" + artist.toLowerCase().replace("and", "").replace(" ", "-") + "/" + track.replace(" ", "-").toLowerCase() + "-lyrics/";
-                    asyncTask.delegate = this;
-                    asyncTask.execute(url, url2, artist, track);
+                asyncTask.delegate = this;
+                asyncTask.execute(url, url2, artist, track);
             }
         }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putAll(savedInstanceState);
+    }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
     @Override
     public void processFinish(String output){
