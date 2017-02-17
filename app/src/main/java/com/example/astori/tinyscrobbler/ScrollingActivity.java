@@ -1,4 +1,5 @@
 package com.example.astori.tinyscrobbler;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ public class ScrollingActivity extends AppCompatActivity implements AsyncRespons
     }
     @Override
     public void onNewIntent(Intent intent) {
-        Task asyncTask = new Task();
+        Task asyncTask = new Task(this);
         Bundle extras = intent.getExtras();
         if (extras != null) {
             if (extras.containsKey("track") && extras.containsKey("artist")) {

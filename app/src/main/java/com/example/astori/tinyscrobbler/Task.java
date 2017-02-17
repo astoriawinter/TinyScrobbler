@@ -1,5 +1,7 @@
 package com.example.astori.tinyscrobbler;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.jsoup.Connection;
@@ -14,6 +16,21 @@ import java.io.IOException;
 
 public class Task extends AsyncTask<String,Void, String> {
     public AsyncResponse delegate = null;
+    ProgressDialog progressDialog;
+    private Context mContext;
+
+    public Task(Context context) {
+        mContext = context;
+        progressDialog = new ProgressDialog(mContext);
+    }
+    protected void onPreExecute() {
+
+        super.onPreExecute();
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Wait while loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
     @Override
     protected String doInBackground(String... url) {
         Document doc = null;
@@ -64,6 +81,7 @@ public class Task extends AsyncTask<String,Void, String> {
 
     protected void onPostExecute(String result)
     {
+        progressDialog.dismiss();
         delegate.processFinish(result);
     }
 }
